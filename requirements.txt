@@ -1,0 +1,4 @@
+anthropic>=0.25.0
+playwright>=1.44.0
+gspread>=6.0.0
+google-auth>=2.29.0

@@ -1,0 +1,47 @@
+[
+  {
+    "name": "UK Find a Tender",
+    "url": "https://www.find-tender.service.gov.uk/Search/Results",
+    "pagination": {
+      "strategy": "url_param",
+      "param": "page",
+      "start": 1,
+      "increment": 1,
+      "max_pages": 5
+    },
+    "delay_ms": 2000
+  },
+
+  {
+    "name": "Example Portal with Login",
+    "url": "https://portal.example-tenders.com/opportunities",
+    "login_url": "https://portal.example-tenders.com/login",
+    "credentials": {
+      "username": "YOUR_USERNAME",
+      "password": "YOUR_PASSWORD",
+      "username_selector": "input[name='email']",
+      "password_selector": "input[name='password']",
+      "submit_selector": "button[type='submit']"
+    },
+    "wait_for_selector": ".tender-list",
+    "pagination": {
+      "strategy": "next_button",
+      "next_selector": "a.next-page",
+      "max_pages": 10
+    },
+    "delay_ms": 3000
+  },
+
+  {
+    "name": "Example Portal with URL Pagination",
+    "url": "https://tenders.example-gov.com/search?status=open&page=1",
+    "pagination": {
+      "strategy": "url_param",
+      "param": "page",
+      "start": 1,
+      "increment": 1,
+      "max_pages": 20
+    },
+    "delay_ms": 1500
+  }
+]
