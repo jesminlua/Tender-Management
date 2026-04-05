@@ -85,4 +85,46 @@ create policy "service role can write runs"
 -- ── SITE COOKIES ─────────────────────────────────────────────
 create table if not exists site_cookies (
   site_id     uuid primary key references sites(id) on delete cascade,
-  cookies     text not
+  cookies     text not null,
+  updated_at  timestamptz default now()
+);
+
+alter table site_cookies enable row level security;
+create policy "service role manages cookies"
+  on site_cookies for all using (auth.role() = 'service_role');
+
+
+-- ── SCRAPE QUEUE ─────────────────────────────────────────────
+create table if not exists scrape_queue (
+  id            uuid primary key default gen_random_uuid(),
+  site_id       uuid references sites(id) on delete cascade,
+  triggered_by  uuid references auth.users(id) on delete set null,
+  status        text not null default 'pending',
+  created_at    timestamptz default now(),
+  started_at    timestamptz,
+  finished_at   timestamptz,
+  error         text
+);
+
+alter table scrape_queue enable row level security;
+create policy "authenticated users can read queue"
+  on scrape_queue for select using (auth.role() = 'authenticated');
+create policy "service role manages queue"
+  on scrape_queue for all using (auth.role() = 'service_role');
+
+
+-- ── REALTIME ─────────────────────────────────────────────────
+alter publication supabase_realtime add table tenders;
+alter publication supabase_realtime add table scrape_runs;
+alter publication supabase_realtime add table scrape_queue;
+
+
+-- ── SAMPLE SITE ───────────────────────────────────────────────
+insert into sites (name, url, pagination, delay_ms) values
+(
+  'UK Find a Tender',
+  'https://www.find-tender.service.gov.uk/Search/Results',
+  '{"strategy":"url_param","param":"page","start":1,"increment":1,"max_pages":5}',
+  2000
+)
+on conflict do nothing;
