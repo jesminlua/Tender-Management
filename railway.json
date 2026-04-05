@@ -1,0 +1,9 @@
+{
+  "build": {
+    "builder": "DOCKERFILE",
+    "dockerfilePath": "scraper/Dockerfile"
+  },
+  "deploy": {
+    "startCommand": "python worker.py"
+  }
+}
