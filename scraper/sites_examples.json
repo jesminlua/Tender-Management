@@ -1,0 +1,168 @@
+[
+  {
+    "note": "──────────────────────────────────────────",
+    "note2": "STRATEGY 1: No pagination (single page)",
+    "note3": "──────────────────────────────────────────"
+  },
+  {
+    "name": "Single Page Portal",
+    "url": "https://tenders.example.com/all",
+    "enabled": true,
+    "pagination": { "strategy": "none" },
+    "delay_ms": 2000
+  },
+
+  {
+    "note": "──────────────────────────────────────────",
+    "note2": "STRATEGY 2: URL parameter (page=1, page=2…)",
+    "note3": "──────────────────────────────────────────"
+  },
+  {
+    "name": "UK Find a Tender",
+    "url": "https://www.find-tender.service.gov.uk/Search/Results",
+    "enabled": true,
+    "pagination": {
+      "strategy":  "url_param",
+      "param":     "page",
+      "start":     1,
+      "increment": 1,
+      "max_pages": 20
+    },
+    "delay_ms": 2000
+  },
+
+  {
+    "note": "──────────────────────────────────────────",
+    "note2": "STRATEGY 3: Next button click",
+    "note3": "──────────────────────────────────────────"
+  },
+  {
+    "name": "Portal with Next Button",
+    "url": "https://portal.example.com/tenders",
+    "enabled": true,
+    "pagination": {
+      "strategy":      "next_button",
+      "next_selector": "a.pagination__next, a[rel='next']",
+      "max_pages":     15
+    },
+    "wait_for_selector": ".tender-results",
+    "delay_ms": 2500
+  },
+
+  {
+    "note": "──────────────────────────────────────────",
+    "note2": "STRATEGY 4: Load More button",
+    "note3": "──────────────────────────────────────────"
+  },
+  {
+    "name": "Portal with Load More",
+    "url": "https://portal.example.com/opportunities",
+    "enabled": true,
+    "pagination": {
+      "strategy":            "load_more",
+      "load_more_selector":  "button.load-more, button:text('Show more results')",
+      "max_pages":           20,
+      "delay_ms":            3000
+    }
+  },
+
+  {
+    "note": "──────────────────────────────────────────",
+    "note2": "STRATEGY 5: Infinite scroll",
+    "note3": "──────────────────────────────────────────"
+  },
+  {
+    "name": "Portal with Infinite Scroll",
+    "url": "https://portal.example.com/feed",
+    "enabled": true,
+    "pagination": {
+      "strategy":  "infinite",
+      "max_pages": 10,
+      "delay_ms":  2500
+    }
+  },
+
+  {
+    "note": "──────────────────────────────────────────",
+    "note2": "STRATEGY 6: Tab links (visit each tab/category separately)",
+    "note3": "──────────────────────────────────────────"
+  },
+  {
+    "name": "Multi-Category Portal",
+    "url": "https://portal.example.com",
+    "enabled": true,
+    "tab_urls": [
+      "https://portal.example.com/category/construction",
+      "https://portal.example.com/category/it",
+      "https://portal.example.com/category/consulting",
+      "https://portal.example.com/category/services"
+    ],
+    "pagination": {
+      "strategy":  "url_param",
+      "param":     "page",
+      "start":     1,
+      "increment": 1,
+      "max_pages": 10
+    },
+    "delay_ms": 2000
+  },
+
+  {
+    "note": "──────────────────────────────────────────",
+    "note2": "LOGIN EXAMPLE: Single-page form",
+    "note3": "──────────────────────────────────────────"
+  },
+  {
+    "name": "Protected Portal (Form Login)",
+    "url": "https://secure.example.com/tenders",
+    "login_url": "https://secure.example.com/login",
+    "enabled": true,
+    "credentials": {
+      "type":               "single_page",
+      "username":           "your@email.com",
+      "password":           "yourpassword",
+      "username_selector":  "input[name='email']",
+      "password_selector":  "input[name='password']",
+      "submit_selector":    "button[type='submit']",
+      "success_selector":   ".user-dashboard",
+      "fail_selector":      ".login-error"
+    },
+    "verify_url":      "https://secure.example.com/tenders",
+    "verify_selector": ".tender-list",
+    "pagination": {
+      "strategy":      "next_button",
+      "next_selector": "a.next",
+      "max_pages":     10
+    },
+    "delay_ms": 3000
+  },
+
+  {
+    "note": "──────────────────────────────────────────",
+    "note2": "LOGIN EXAMPLE: Two-step login (username → next → password)",
+    "note3": "──────────────────────────────────────────"
+  },
+  {
+    "name": "Protected Portal (Two-Step Login)",
+    "url": "https://secure2.example.com/procurement",
+    "login_url": "https://secure2.example.com/sign-in",
+    "enabled": true,
+    "credentials": {
+      "type":               "two_step",
+      "username":           "your@email.com",
+      "password":           "yourpassword",
+      "username_selector":  "input#email",
+      "next_selector":      "button#continue",
+      "password_selector":  "input#password",
+      "submit_selector":    "button#sign-in"
+    },
+    "pagination": {
+      "strategy":  "url_param",
+      "param":     "p",
+      "start":     1,
+      "increment": 1,
+      "max_pages": 25
+    },
+    "delay_ms": 3000
+  }
+]
