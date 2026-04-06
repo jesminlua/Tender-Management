@@ -156,3 +156,4 @@ Strategies can be combined: set `tab_urls` to visit each category tab, and set a
 - **Add delays** (`delay_ms: 4000+`) on rate-limited portals
 - **Cookie reuse** means login only runs once per session — subsequent runs are fast
 - The **fingerprint deduplication** ensures re-running the scraper never creates duplicate rows
+
