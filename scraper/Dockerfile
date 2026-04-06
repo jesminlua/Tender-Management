@@ -1,6 +1,5 @@
 FROM python:3.11-slim
 
-# System deps for Playwright + BeautifulSoup lxml
 RUN apt-get update && apt-get install -y \
     curl wget gnupg ca-certificates \
     libglib2.0-0 libnss3 libnspr4 libatk1.0-0 \
@@ -12,11 +11,10 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-COPY requirements.txt .
+COPY scraper/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 RUN playwright install chromium --with-deps
 
-COPY . .
+COPY scraper/ .
 
-# Default: run the queue worker (long-lived process)
 CMD ["python", "worker.py"]
