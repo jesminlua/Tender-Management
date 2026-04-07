@@ -157,3 +157,5 @@ Strategies can be combined: set `tab_urls` to visit each category tab, and set a
 - **Cookie reuse** means login only runs once per session — subsequent runs are fast
 - The **fingerprint deduplication** ensures re-running the scraper never creates duplicate rows
 
+
+
