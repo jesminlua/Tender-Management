@@ -14,10 +14,10 @@ CHUNK_OVERLAP = 1000
 
 LISTING_PROMPT = """You are a procurement data extraction specialist.
 
-Extract tender/procurement opportunities from the text below. 
+Extract tender/procurement opportunities from the text below.
 Only extract items from "Quotation Proposal" and "Tender Proposal" sections.
-Ignore any items from "Quotation Result", "Tender Result", "Quotation Cancellation" or "Tender Cancellation" sections.
-Items in Result sections have "Successful Bidders" column - skip those entirely.
+Ignore items from "Quotation Result", "Tender Result", "Quotation Cancellation" or "Tender Cancellation" sections.
+Skip any items that have a "Successful Bidders" column - those are historical results.
 Source URL: {url}
 
 Return a JSON array. Each object must have EXACTLY these keys (null if unknown):
