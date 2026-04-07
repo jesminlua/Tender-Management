@@ -169,7 +169,15 @@ async def process_job(job, supabase):
                 raise RuntimeError("Login failed")
 
             if page.url != site_url:
-                await page.goto(site_url, wait_until="networkidle", timeout=30000)
+    await page.goto(site_url, wait_until="networkidle", timeout=60000)
+    # Extra wait for JavaScript-heavy sites
+    wait_sel = site.get("wait_for_selector")
+    if wait_sel:
+        try:
+            await page.wait_for_selector(wait_sel, timeout=15000)
+        except Exception:
+            pass
+    await asyncio.sleep(site.get("delay_ms", 2000) / 1000)
 
             async for page_num in pag_mod.paginate(page, site):
                 html = await page.content()
