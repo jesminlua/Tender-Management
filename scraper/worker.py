@@ -95,7 +95,16 @@ async def enrich_tender_with_detail(tender, site_url, supabase, api_key):
             await page.goto(detail_url, wait_until="networkidle", timeout=30000)
             await asyncio.sleep(1)
 
-            html = await page.content()
+            # Expand all accordion/details elements before scraping
+try:
+    await page.evaluate("""
+        document.querySelectorAll('details').forEach(d => d.open = true);
+        document.querySelectorAll('.wp-block-details').forEach(d => d.open = true);
+    """)
+    await asyncio.sleep(2)
+except Exception:
+    pass
+html = await page.content()
 
             if VISIT_DETAIL_PAGES:
                 detail_info = extractor.extract_detail_page(html, detail_url, api_key)
