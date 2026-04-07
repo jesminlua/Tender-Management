@@ -36,6 +36,8 @@ log = logging.getLogger(__name__)
 
 API_KEY = os.environ["ANTHROPIC_API_KEY"]
 
+if not API_KEY:
+    raise RuntimeError("Missing ANTHROPIC_API_KEY")
 
 # ══════════════════════════════════════════════════════════════════════════════
 # SINGLE SITE SCRAPER
