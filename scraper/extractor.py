@@ -15,7 +15,7 @@ BASE_LISTING_PROMPT = """You are a procurement data extraction specialist for Ma
 Site: {site_name_or_url}
 
 UNIVERSAL RULES — apply to ALL sites:
-1. Extract ONLY active, open procurement opportunities: tenders, quotations (sebut harga), RFPs, EOIs
+1. Extract ALL procurement opportunities — open, closing soon, recently closed, and unknown status. Include price schedules, corrigenda, and refund notices only if they are attached to a specific tender reference number. Include tenders, quotations (sebut harga), RFPs, EOIs
 2. IGNORE completely: awarded results, cancellations, successful bidder lists (Syarikat Berjaya),
    staff announcements, promotions, news articles, event notices, committee meeting schedules,
    annual reports, strategic plan books, T-shirt procurement for internal events
