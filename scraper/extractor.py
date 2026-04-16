@@ -36,6 +36,7 @@ For each tender found, return a JSON object with these keys (null if unknown):
   issuer       — the organisation issuing the tender
   category     — type of goods/works/services
   deadline     — closing date (keep original text)
+  briefing_date — tender briefing or site visit date and time if shown
   budget       — estimated value if shown
   status       — exactly one of: Open | Closing Soon | Closed | Awarded | Unknown
   description  — 1-2 sentence summary
@@ -55,12 +56,13 @@ Extract additional detail from this tender detail page.
 Source URL: {url}
 
 Return a JSON object with these keys (null if not found):
-  full_description  — complete description of scope
+  full_description  — complete description of scope, extract as much information as you can and summarise it
   requirements      — eligibility or technical requirements  
   submission_method — how to submit
   contact_name      — contact person
   contact_email     — contact email
   contact_phone     — contact phone
+  briefing_date     - tender briefing, site visit, or mandatory briefing date and time
   additional_info   — any other important information
 
 Return ONLY the raw JSON object, no markdown.
@@ -259,7 +261,7 @@ def merge_detail_into_tender(tender, detail):
         else:
             tender["description"] += "\n\n" + detail["full_description"]
     for field in ["contact_name", "contact_email", "contact_phone",
-                  "submission_method", "requirements", "additional_info"]:
+                  "submission_method", "requirements","briefing_date", "additional_info"]:
         if detail.get(field) and not tender.get(field):
             tender[field] = detail[field]
     parts = list(filter(None, [
