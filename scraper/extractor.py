@@ -43,6 +43,7 @@ For each tender found, return a JSON object with these keys (null if unknown):
   url          — absolute URL to the tender detail page
   location     — geographic location if mentioned
   contact      — contact name/email/phone if shown
+  tender_type  - exactly one of: RFQ | RFP | RFI | EOI | Tender | Unknown
 
 Return ONLY a raw JSON array. Return [] if no active tenders found.
 
@@ -64,6 +65,7 @@ Return a JSON object with these keys (null if not found):
   contact_phone     — contact phone
   briefing_date     - tender briefing, site visit, or mandatory briefing date and time
   additional_info   — any other important information
+  tender_type       - exactly one of: RFQ | RFP | RFI | EOI | Tender | Unknown
 
 Return ONLY the raw JSON object, no markdown.
 
@@ -261,7 +263,7 @@ def merge_detail_into_tender(tender, detail):
         else:
             tender["description"] += "\n\n" + detail["full_description"]
     for field in ["contact_name", "contact_email", "contact_phone",
-                  "submission_method", "requirements","briefing_date", "additional_info"]:
+                  "submission_method", "requirements","briefing_date", "additional_info", "tender_type"]:
         if detail.get(field) and not tender.get(field):
             tender[field] = detail[field]
     parts = list(filter(None, [
